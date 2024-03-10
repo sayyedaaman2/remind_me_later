@@ -1,0 +1,61 @@
+:root{
+    --button-color : #7796CB;
+    --bg-color: #D1D2F9;
+    --header-color : #576490;
+    --overlay-color: #A3BCF9;
+    --border-color : #C9CAD9;
+}
+
+html,body{
+    margin: 0;
+    padding : 0;
+    box-sizing: border-box;
+    background-color: var(--bg-color);
+}
+
+.header{
+    position: relative;
+    background-color: var(--header-color);
+    /* max-height: 5rem; */
+
+}
+.header .header-container{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 2rem;
+    padding : 10px 0;
+
+}
+.header .header-container .company-name{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2vw;
+}
+.header .header-container .menu-list{
+    flex : 1;
+    display: flex;
+    list-style:none;
+    justify-content: right;
+    align-items: center;
+    gap : 10px;
+}
+.menu-list li{
+    position: relative;
+    border: 1px var(--border-color) solid;
+    box-shadow:  inset -1px 0px 1px 2px var(--header-color);
+    border-radius: 5px;
+    background-color: var(--button-color);
+
+}
+.menu-list li:hover{
+    background-color: var(--overlay-color);
+}
+.menu-list li a{
+    display: block;
+    padding:8px;
+    text-decoration: none;
+    color : black;
+    
+}
