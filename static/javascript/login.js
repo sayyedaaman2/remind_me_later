@@ -2,29 +2,9 @@ const showPasswordButton = document.getElementById('show-password-btn');
 const emailInput = document.querySelector('input[name="email"]');
 const passwordInput = document.querySelector('input[name="password"]');
 const showPasswordIcon = document.getElementById('show-password-icon');
-const formData = document.querySelector('form');
 
 
 
-formData.addEventListener('submit',(event)=>{
-    event.preventDefault();
-    const formElements = event.target.elements;
-    const formValues = {};
-
-    for (let i = 0; i < formElements.length; i++) {
-        const element = formElements[i];
-
-        // Check if the element is an input field (you may need to adjust this condition based on your form structure)
-        if (element.tagName === 'INPUT') {
-            const name = element.name;
-            const value = element.value;
-            formValues[name] = value;
-        }
-    }
-
-    console.log("Form submit");
-    console.log(formValues);
-})
 
 showPasswordButton.addEventListener('click',(event)=>{
 

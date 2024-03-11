@@ -21,6 +21,7 @@ from remind_me_later import views
 urlpatterns = [
     path('', views.homePage),
     path('admin/', admin.site.urls),
-    path('login/', views.authPage),
-    path('reminder-list',views.remiderList)
+    path('sign-up/', views.signUpPage),
+    path('login/', views.loginPage),
+    path('reminder-list',views.remiderList),
 ]

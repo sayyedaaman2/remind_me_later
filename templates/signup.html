@@ -24,18 +24,26 @@
               alt="login-img"
             />
           </div>
-          <form  method="post" >
+          <form method="POST" action="">
             {% csrf_token %}
+            <label for="username"> username </label>
+            <input type="text" name="username" />
 
             <label for="email"> email </label>
-            <input type="email" name="email" />
+            <input type="text" name="email" />
 
             <label for="password"> password </label>
-              <input type="password" name="password" />
-              <div id="show-password-btn" class="show-password-btn">
-                <img id="show-password-icon" src="/static/image/hide.png" height="25" width="25" />
-              </div>
-            <button class="submit-button" type="submit">login</button>
+            <input type="password" name="password" />
+            <div id="show-password-btn" class="show-password-btn">
+              <img
+                id="show-password-icon"
+                src="/static/image/hide.png"
+                height="25"
+                width="25"
+              />
+            </div>
+            <button class="submit-button" type="submit">sign up</button>
+            <div>{{error.message}}</div>
           </form>
         </div>
       </div>
