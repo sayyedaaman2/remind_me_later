@@ -1,0 +1,19 @@
+{
+  // These tasks will run in order when initializing your CodeSandbox project.
+  "setupTasks": ["pip install django"],
+
+  // These tasks can be run from CodeSandbox. Running one will open a log in the app.
+  "tasks": {
+    "pip install django": {
+      "name": "django",
+      "command": "pip install django"
+    },
+    "python manage.py runserver": {
+      "name": "run server",
+      "command": "python manage.py runserver",
+      "preview": {
+        "port": 8000
+      }
+    }
+  }
+}
