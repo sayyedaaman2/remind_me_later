@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+<section class="create-reminder-section">
+    <div class="container">
+        <form method="POST" action="">
+            {% csrf_token %}
+            <label for="message"> message </label>
+            <input type="text" name="message" />
+
+            <label for="date"> date </label>
+            <input type="date" name="date" />
+            <label for="time"> time </label>
+            <input type="time" name="time" />
+            {% if messages %}
+            {% for message in messages %}
+              <div class="{% if message.tags %}{{ message.tags }}{% endif %} message">
+                <span>{{ message }}</span>
+              </div>
+            {% endfor %}
+          {% endif %}
+          
+          
+            <button class="submit-button" type="submit">submit</button>
+            <div>{{error.message}}</div>
+            
+          </form>
+    </div>
+</section>
+<link rel="stylesheet" type="text/css" href="{% static 'css/remider.css' %}">
+
+{% endblock %}

@@ -23,5 +23,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('sign-up/', views.signUpPage),
     path('login/', views.loginPage),
-    path('reminder-list',views.remiderList),
+    path('reminder-list/',views.reminderlist),
+    path('create-reminder/',views.createReminder),
 ]

@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -7,11 +8,12 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title></title>
+    <title>login</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="/static/css/auth.css" />
-    <link rel="stylesheet" href="/static/css/index.css" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/auth.css' %}">
+
   </head>
   <body>
     <section class="login-section">
@@ -39,8 +41,21 @@
                 width="25"
               />
             </div>
+            {% if messages %}
+            {% for message in messages %}
+              <div class="{% if message.tags %}{{ message.tags }}{% endif %} message">
+                <span>{{ message }}</span>
+              </div>
+            {% endfor %}
+          {% endif %}
+          
+          
             <button class="submit-button" type="submit">login</button>
             <div>{{error.message}}</div>
+            <div class="option">
+              <a href="#forget-password" title="forget-password">Forget Password</a>
+              <a href="/sign-up" title="signup">Create new account</a>
+            </div>
           </form>
         </div>
       </div>

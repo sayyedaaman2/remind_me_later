@@ -4,6 +4,14 @@
     --header-color : #576490;
     --overlay-color: #A3BCF9;
     --border-color : #C9CAD9;
+    --reminder-bg : #8F95D3;
+    --reminder-card:#D3C4E3;
+    --reminder-border:#8F95D3;
+    --reminder-button:#89DAFF;
+}
+i{
+    height: 50px;
+    width: 50px;
 }
 
 html,body{
@@ -16,7 +24,7 @@ html,body{
 .header{
     position: relative;
     background-color: var(--header-color);
-    /* max-height: 5rem; */
+    max-height: 5rem;
 
 }
 .header .header-container{
@@ -58,4 +66,20 @@ html,body{
     text-decoration: none;
     color : black;
     
+}
+.success{
+    color:white;
+    border: 3px solid green;
+
+}
+.error{
+    border: 3px solid red;
+
+    color : white;
+}
+.info{
+    border: 3px solid yellow;
+
+    color: black;
+
 }

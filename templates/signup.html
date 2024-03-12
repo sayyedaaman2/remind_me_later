@@ -16,6 +16,7 @@
   <body>
     <section class="login-section">
       <div class="container">
+      
         <div class="login-card">
           <div class="image-block">
             <img
@@ -27,13 +28,13 @@
           <form method="POST" action="">
             {% csrf_token %}
             <label for="username"> username </label>
-            <input type="text" name="username" />
+            <input type="text" value="{{ context.username }}"  name="username" />
 
             <label for="email"> email </label>
-            <input type="text" name="email" />
+            <input type="text" value="{{ context.email }}" name="email" />
 
             <label for="password"> password </label>
-            <input type="password" name="password" />
+            <input type="password" value="{{context.password }}" name="password" />
             <div id="show-password-btn" class="show-password-btn">
               <img
                 id="show-password-icon"
@@ -42,8 +43,17 @@
                 width="25"
               />
             </div>
+            {% if messages %}
+            {% for message in messages %}
+              <div class="{% if message.tags %}{{ message.tags }}{% endif %} message">
+                <span>{{ message }}</span>
+              </div>
+            {% endfor %}
+          {% endif %}
+          
             <button class="submit-button" type="submit">sign up</button>
             <div>{{error.message}}</div>
+            <a href="/login">I have already account.</a>
           </form>
         </div>
       </div>
