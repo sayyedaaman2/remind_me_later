@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'fontawesomefree',
-    'reminder'
+    'reminder',
 ]
 
 MIDDLEWARE = [
@@ -105,8 +105,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Custom auth
 
 AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  # Default authentication backend
     'reminder.auth_backends.CustomAuthBackend',
-    'django.contrib.auth.backends.ModelBackend'  # Default authentication backend
 ]
 
 
@@ -137,3 +137,10 @@ STATICFILES_DIRS = [
 ]
 
 
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_PORT= 587
+EMAIL_HOST_USER = "sayyedaamandev01@gmail.com"
+EMAIL_HOST_PASSWORD="tfjs vzeq insc nlui"

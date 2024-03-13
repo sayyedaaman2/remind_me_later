@@ -15,10 +15,15 @@ i{
 }
 
 html,body{
+    position: relative;
     margin: 0;
     padding : 0;
     box-sizing: border-box;
     background-color: var(--bg-color);
+    height: 100vh;
+}
+.main{
+    height: calc(100vh - 5rem);
 }
 
 .header{

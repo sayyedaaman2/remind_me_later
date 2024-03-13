@@ -1,7 +1,6 @@
 /* style.css */
 
 .reminder-section{
-    height: calc(5rem - 100vh);
     position: relative;
 }
 .reminder-container{

@@ -1,16 +1,20 @@
+import time
+from datetime import datetime
 from django.http import HttpResponse,HttpResponseRedirect
 from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate,login
+from django.contrib.auth import authenticate,login,logout,get_user
 from django.contrib.auth.decorators import login_required
+from reminder.models import Reminder
 
-import time
+from reminder.utils import send_email_to_client
 
 # @login_required(login_url='/login')
 def homePage(request):
     print(request.user.is_authenticated);
     print(request.user)
+
     return render(request,"index.html")
 
 
@@ -22,10 +26,10 @@ def loginPage(request):
             messages.info(request, "Enter valid details")
             return redirect('/login')
         
-        user = authenticate(request, email=email, password=password)
-        print("userauth",user);
-        if user is not None:
-            login(request, user)
+        authenticated_user = authenticate(request, email=email, password=password)
+        if authenticated_user is not None:
+            print("User authenticated:", authenticated_user)  # Debug statement
+            login(request,user=authenticated_user)
             return redirect('/')  # Redirect to home page (adjust the URL name as per your project)
         else:
             messages.error(request, "Invalid username or password")
@@ -33,6 +37,10 @@ def loginPage(request):
     
     return render(request, 'login.html')
 
+def logoutPage(request):
+    logout(request)
+    HttpResponse("logging out user.")
+    return redirect('/login')
 def signUpPage(request):
     context = {
         'username': "",
@@ -82,5 +90,51 @@ def reminderlist(request):
 
     return render(request,"reminderlist.html")
 
+
+
 def createReminder(request):
+    if request.method == "POST":
+        user_message = request.POST.get("message")
+        user_date = request.POST.get('date')
+        user_time = request.POST.get('time')
+        user_email = request.POST.get('email')
+
+        if user_message == '' or user_date == '' or user_time == '' or user_email == '':
+            messages.info(request, "Enter valid details")
+            return redirect('/create-reminder')
+
+        user = User.objects.filter(email=user_email).first()
+
+        if user is not None:
+            user_time_date_str = f"{user_date} {user_time}"
+            print("date_time", user_time_date_str)
+            try:
+                user_time_date = datetime.strptime(user_time_date_str, "%Y-%m-%d %H:%M")
+                # Adjust timezone if needed
+                # user_time_date = timezone.make_aware(user_time_date)
+            except ValueError:
+                messages.error(request, "Invalid date or time format")
+                return redirect('/create-reminder')
+            
+            # Create reminder for the authenticated user
+            created_reminder = Reminder.objects.create(
+                message=user_message,
+                schedule_time=user_time_date,
+                status='pending',
+                user=user
+            )
+            print(created_reminder)
+            messages.success(request, "Reminder created successfully")
+            return redirect('/create-reminder')
+        else:
+            messages.error(request, 'User not found!')
+            return redirect('/create-reminder')
+
     return render(request, 'create_reminder.html')
+
+
+
+# testing email 
+def sendEmail(request):
+    send_email_to_client()
+    return redirect('/')

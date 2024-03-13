@@ -5,13 +5,19 @@
     <div class="container">
         <form method="POST" action="">
             {% csrf_token %}
-            <label for="message"> message </label>
-            <input type="text" name="message" />
-
-            <label for="date"> date </label>
-            <input type="date" name="date" />
-            <label for="time"> time </label>
-            <input type="time" name="time" />
+            <div class="message-info">
+              <label for="message"> message </label>
+              <input type="text" name="message" />
+  
+            </div>
+            <label for="email"> email </label>
+            <input type="text" name="email" />
+            <div class="time-date">
+              <label for="date"> date </label>
+              <input type="date" name="date" />
+              <label for="time"> time </label>
+              <input type="time" name="time" />
+            </div>
             {% if messages %}
             {% for message in messages %}
               <div class="{% if message.tags %}{{ message.tags }}{% endif %} message">
@@ -20,13 +26,18 @@
             {% endfor %}
           {% endif %}
           
-          
-            <button class="submit-button" type="submit">submit</button>
+              <div class="button-info">
+                <button class="submit-button" type="submit">set timer</button>
+
+              </div>
             <div>{{error.message}}</div>
-            
+            <li>
+              login feature is not working in django project.
+              That's why we are take email from input.
+            </li>
           </form>
     </div>
 </section>
-<link rel="stylesheet" type="text/css" href="{% static 'css/remider.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/create_reminder.css' %}">
 
 {% endblock %}
