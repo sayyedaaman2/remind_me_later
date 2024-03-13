@@ -1,5 +1,42 @@
-{% include "header.html" %}
-{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Home page</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/static/css/index.css" />
 
-{% endblock %}
-{% include "footer.html" %}
+    <!-- Our project just needs Font Awesome Free's Solid and Brand files -->
+
+    <link
+      href="{% static 'fontawesomefree/css/fontawesome.css' %}"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="{% static 'fontawesomefree/css/brands.css' %}"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="{% static 'fontawesomefree/css/solid.css' %}"
+      rel="stylesheet"
+      type="text/css"
+    />
+  </head>
+  <body>
+      {% include "header.html" %} 
+    <div class="main">
+        {% block content %} {% endblock %} 
+    </div>
+    {% include "footer.html" %}
+    <script src="" async defer></script>
+  </body>
+</html>

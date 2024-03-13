@@ -1,0 +1,41 @@
+{% extends "base.html" %}   
+
+{% block content %}
+{% load static %}
+<section class="reminder-section">
+    <div class="reminder-container">
+        <div class="reminder-card">
+            <div class="reminder-message">
+                Wake on 5 AM
+            </div>
+            <div class="reminder-time">
+                12/2/2001
+            </div>
+            <div class="reminder-thought">
+                <i class="fa-solid fa-envelope"></i>
+                email
+            </div>
+            <div class="reminder-edit">
+            <button class="delete-btn">
+                delete
+            </button>
+            <button class="edit-btn">
+                edit
+            </button>
+            </div>
+            
+        </div>
+        <div class="reminder-card">
+           <div class="create-reminder-card">
+               <a href="/create-reminder">
+                <i class="fa-solid fa-notes-medical"></i>
+               </a>
+        </div>
+            
+        </div>
+    </div>    
+</section>
+{% comment %} <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}"> {% endcomment %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/remider.css' %}">
+
+{% endblock %}

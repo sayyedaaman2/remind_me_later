@@ -1,0 +1,82 @@
+.create-reminder-section{
+    height: inherit;
+    position: relative;
+}
+.create-reminder-section .container{
+    height: inherit;
+    display: grid;
+    place-items: center;
+}
+.create-reminder-section .container form{
+    border: 1px solid var(--border-color);
+    padding : 25px;
+    height:  450px ;
+    width: 700px ;
+    background-color: var(--reminder-bg);
+    display: grid;
+    align-items: flex-start;
+    align-content:space-between;
+}
+.create-reminder-section .container form .message-info{
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding : 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 100px;
+}
+.create-reminder-section .container form label{
+    display: block;
+    font-size: 1.6rem;
+    text-transform: capitalize;
+    background-color: var(--reminder-bg);
+}
+.create-reminder-section .container form .time-date{
+    max-height: 100px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding : 10px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.create-reminder-section .container form .time-date input{
+    padding :  5px 10px;
+
+}
+.create-reminder-section .container form .time-date label{
+    font-size: 1.3rem;
+}
+.create-reminder-section .container form input{
+    padding :  10px 10px;
+    font-size: 1rem;
+    border-radius: 10px;
+}
+.create-reminder-section .container form input:focus{
+    outline: none;
+}
+.create-reminder-section .container form .button-info{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.create-reminder-section .container form .button-info button{
+    display: block;
+    padding : 10px 10px;
+    background-color: var(--reminder-button);
+    border-radius: 10px;
+    box-shadow: 1px 2px 4px gray;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+.create-reminder-section .container form button:hover{
+    background-color: var(--border-color);
+}
+
+.create-reminder-section .container form li{
+    border : 1px solid yellow;
+    font-size: 18px;
+    text-decoration: solid;
+}

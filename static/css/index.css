@@ -4,19 +4,32 @@
     --header-color : #576490;
     --overlay-color: #A3BCF9;
     --border-color : #C9CAD9;
+    --reminder-bg : #8F95D3;
+    --reminder-card:#D3C4E3;
+    --reminder-border:#8F95D3;
+    --reminder-button:#89DAFF;
+}
+i{
+    height: 50px;
+    width: 50px;
 }
 
 html,body{
+    position: relative;
     margin: 0;
     padding : 0;
     box-sizing: border-box;
     background-color: var(--bg-color);
+    height: 100vh;
+}
+.main{
+    height: calc(100vh - 5rem);
 }
 
 .header{
     position: relative;
     background-color: var(--header-color);
-    /* max-height: 5rem; */
+    max-height: 5rem;
 
 }
 .header .header-container{
@@ -58,4 +71,20 @@ html,body{
     text-decoration: none;
     color : black;
     
+}
+.success{
+    color:white;
+    border: 3px solid green;
+
+}
+.error{
+    border: 3px solid red;
+
+    color : white;
+}
+.info{
+    border: 3px solid yellow;
+
+    color: black;
+
 }
