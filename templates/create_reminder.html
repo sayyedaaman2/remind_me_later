@@ -10,13 +10,10 @@
               <input type="text" name="message" />
   
             </div>
-            <label for="email"> email </label>
-            <input type="text" name="email" />
             <div class="time-date">
-              <label for="date"> date </label>
-              <input type="date" name="date" />
-              <label for="time"> time </label>
-              <input type="time" name="time" />
+              <label for="scheduletime"> date </label>
+              <input type="datetime-local" value="" name="scheduletime" />
+              
             </div>
             {% if messages %}
             {% for message in messages %}
@@ -30,11 +27,7 @@
                 <button class="submit-button" type="submit">set timer</button>
 
               </div>
-            <div>{{error.message}}</div>
-            <li>
-              login feature is not working in django project.
-              That's why we are take email from input.
-            </li>
+      
           </form>
     </div>
 </section>

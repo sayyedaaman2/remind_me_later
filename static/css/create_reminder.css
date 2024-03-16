@@ -80,3 +80,8 @@
     font-size: 18px;
     text-decoration: solid;
 }
+.create-reminder-section .container form .message{
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 4px black;
+  }

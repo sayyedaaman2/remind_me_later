@@ -144,3 +144,6 @@ EMAIL_USE_SSL = False
 EMAIL_PORT= 587
 EMAIL_HOST_USER = "sayyedaamandev01@gmail.com"
 EMAIL_HOST_PASSWORD="tfjs vzeq insc nlui"
+
+
+CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672/'

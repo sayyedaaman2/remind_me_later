@@ -47,15 +47,22 @@
     cursor: pointer;
 }
 .reminder-message {
-    font-size: 3rem;
+    font-size: 2rem;
     color: #333;
+    word-wrap: break-word;
 }
 
 .reminder-time {
-    font-size: 2rem;
+    font-size: 1rem;
     color: #888;
 }
 
+.reminder-info{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+}
 .reminder-thought {
     font-size: 1rem;
     justify-content: center;
@@ -75,12 +82,21 @@
 .reminder-thought i{
     display: inline;
 }
+.reminder-status{
+    font-size: 1rem;
+    justify-content: center;
+    color: #555;
+    padding : 10px;
+    border : 1px solid var(--reminder-border);
+    border-radius: 10px;
+    text-transform: uppercase;
+}
 .reminder-edit{
     display: grid;
     grid-template-columns: repeat(2,auto);
     gap: 10px;
 }
-button{
+reminder-btn{
     background-color: var(--reminder-button);
     text-transform: uppercase;
     padding : 12px 0;
@@ -88,6 +104,8 @@ button{
     font-size: 1rem;
     font-weight: 700;
     box-shadow: 6px 5px 0px 0px gray;
+    text-decoration: none;
+    color:var(--reminder-button);
 }
 button:hover{
     background-color: var(--reminder-bg);

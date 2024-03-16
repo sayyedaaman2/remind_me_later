@@ -1,14 +1,15 @@
-import time
-from datetime import datetime
+from datetime import datetime,time
+import pytz
 from django.http import HttpResponse,HttpResponseRedirect
 from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout,get_user
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 from reminder.models import Reminder
 
-from reminder.utils import send_email_to_client
+from reminder.utils import schedule_email
 
 # @login_required(login_url='/login')
 def homePage(request):
@@ -20,13 +21,13 @@ def homePage(request):
 
 def loginPage(request):
     if request.method == "POST":
-        email = request.POST.get('email')
+        username = request.POST.get('username')
         password = request.POST.get('password')
-        if email == '' or password == '':
+        if username == '' or password == '':
             messages.info(request, "Enter valid details")
             return redirect('/login')
         
-        authenticated_user = authenticate(request, email=email, password=password)
+        authenticated_user = authenticate(request, username=username, password=password)
         if authenticated_user is not None:
             print("User authenticated:", authenticated_user)  # Debug statement
             login(request,user=authenticated_user)
@@ -87,52 +88,83 @@ def signUpPage(request):
     return render(request, "signup.html",{'context':context})
 
 def reminderlist(request):
+    reminder_list = None # Initialize as an empty list
+    user_id = request.user
 
-    return render(request,"reminderlist.html")
-
+    try:
+        reminder_list = Reminder.objects.filter(user_id=user_id)
+    except Reminder.DoesNotExist:
+        print("No reminders found for the user")
+        reminder_list = None
+        return render(request,'reminderlist.html',{'reminder_list': reminder_list})
+    
+    return render(request, "reminderlist.html", {'reminder_list': reminder_list})
 
 
 def createReminder(request):
     if request.method == "POST":
         user_message = request.POST.get("message")
-        user_date = request.POST.get('date')
-        user_time = request.POST.get('time')
-        user_email = request.POST.get('email')
+        scheduletime = request.POST.get('scheduletime')
 
-        if user_message == '' or user_date == '' or user_time == '' or user_email == '':
+        if user_message == '' or scheduletime == '':
             messages.info(request, "Enter valid details")
             return redirect('/create-reminder')
-
-        user = User.objects.filter(email=user_email).first()
-
+        
+        user = request.user
         if user is not None:
-            user_time_date_str = f"{user_date} {user_time}"
-            print("date_time", user_time_date_str)
             try:
-                user_time_date = datetime.strptime(user_time_date_str, "%Y-%m-%d %H:%M")
-                # Adjust timezone if needed
-                # user_time_date = timezone.make_aware(user_time_date)
+                user_time_date = datetime.strptime(scheduletime, "%Y-%m-%dT%H:%M")
+                ist_timezone = pytz.timezone('Asia/Kolkata')
+                user_time_date_utc = ist_timezone.localize(user_time_date).astimezone(pytz.utc)
+
             except ValueError:
                 messages.error(request, "Invalid date or time format")
                 return redirect('/create-reminder')
             
             # Create reminder for the authenticated user
+        
             created_reminder = Reminder.objects.create(
                 message=user_message,
-                schedule_time=user_time_date,
+                schedule_time=user_time_date_utc,
                 status='pending',
                 user=user
             )
             print(created_reminder)
             messages.success(request, "Reminder created successfully")
-            return redirect('/create-reminder')
+
+            schedule_email(created_reminder)
+            messages.success(request, "Email schedule successfully")
+
+            return redirect('/reminder-list')
         else:
             messages.error(request, 'User not found!')
             return redirect('/create-reminder')
 
     return render(request, 'create_reminder.html')
 
+def editReminder(request,id):
+    # Fetch the reminder object based on the provided id
+    try:
+        reminder= Reminder.objects.get(id=id)
+    except Reminder.DoesNotExist:
+        return HttpResponse("Reminder not found", status=404)
+        
+    # Your edit logic goes here
 
+    return render(request, 'edit_reminder.html',{'reminder':reminder})
+
+def deleteReminder(request,id):
+    #Fetch the reminder object based on the provided id
+    try:
+        reminder= Reminder.objects.get(id=id)
+
+    except Reminder.DoesNotExist:
+        return HttpResponse('Reminder not found', status=404)
+    
+    #Your delete logic goes here
+    reminder.delete()
+
+    return redirect('/reminder-list')
 
 # testing email 
 def sendEmail(request):

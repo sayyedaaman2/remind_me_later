@@ -19,12 +19,14 @@ from django.urls import path
 from remind_me_later import views
 
 urlpatterns = [
-    path('', views.homePage),
+    path('', views.homePage,name="home"),
     path('admin/', admin.site.urls),
     path('sign-up/', views.signUpPage),
     path('login/', views.loginPage),
     path('logout/',views.logoutPage),
     path('reminder-list/',views.reminderlist),
     path('create-reminder/',views.createReminder),
+    path('reminder/edit/<int:id>/', views.editReminder, name='edit_reminder'),
+    path('reminder/delete/<int:id>/', views.deleteReminder, name='delete_reminder'),
     path('send-email',views.sendEmail),
 ]

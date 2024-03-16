@@ -2,29 +2,41 @@
 
 {% block content %}
 {% load static %}
+{% load tz %}
 <section class="reminder-section">
     <div class="reminder-container">
-        <div class="reminder-card">
-            <div class="reminder-message">
-                Wake on 5 AM
+        {% if  reminder_list %}
+        {% for reminder_card in reminder_list %}
+            <div key="{{ forloop.counter }}" class="reminder-card">
+                <div class="reminder-message">
+                    {{ reminder_card.message }}
+                </div>
+                <div class="reminder-time">
+                    {{ reminder_card.schedule_time | timezone:"Asia/Kolkata" }}
+                </div>
+                <div class='reminder-info'>
+                    <div class="reminder-thought">
+                        <i class="fa-solid fa-envelope"></i>
+                        email
+                    </div>
+                    <div class='reminder-status'>
+                        {{reminder_card.status}}
+                    </div>
+                </div>
+                
+                <div class="reminder-edit">
+                    <a href="/reminder/delete/{{ reminder_card.id }}" class="reminder-btn">
+                        delete
+                    </a>
+                    {% comment %} <a href="/reminder/edit/{{ reminder_card.id }}" class="reminder-btn">
+                        edit
+                    </a> {% endcomment %}
+                </div>
             </div>
-            <div class="reminder-time">
-                12/2/2001
-            </div>
-            <div class="reminder-thought">
-                <i class="fa-solid fa-envelope"></i>
-                email
-            </div>
-            <div class="reminder-edit">
-            <button class="delete-btn">
-                delete
-            </button>
-            <button class="edit-btn">
-                edit
-            </button>
-            </div>
-            
-        </div>
+        {% endfor %}
+    
+    {% endif %}
+    
         <div class="reminder-card">
            <div class="create-reminder-card">
                <a href="/create-reminder">
