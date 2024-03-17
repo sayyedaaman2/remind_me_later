@@ -1,3 +1,4 @@
+```plaintext
 # Remind Me Later
 
 ## Introduction
@@ -66,3 +67,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Redis**: In-memory data structure store used as a message broker for Celery tasks.
 
 Please make sure to install these additional modules (`celery`, `celery[redis]`, and `redis`) using `pip install` before running the application.
+
+## Database
+This project uses SQLite database, which is included by default with Django. You don't need to perform any additional setup for the database.
+```
