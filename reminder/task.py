@@ -19,9 +19,11 @@ def send_email_task(reminder_id):
         message_template = """Hello {},
         This is a Notification via the Django server.
         We are notifying you with the following message:
+
         {}
+        
         Thank you """
-        formatted_message = message_template.format(reminder.user.email, reminder.message)
+        formatted_message = message_template.format(reminder.user.username, reminder.message)
 
         # Send email
         send_mail(subject, formatted_message, from_email, recipient_list)

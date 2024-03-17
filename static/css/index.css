@@ -89,3 +89,43 @@ html,body{
     color: black;
 
 }
+
+
+.home-section{
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+.home-section .container{
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.home-section .container h1{
+    color: #333;
+
+}
+.home-section .container p {
+    color: #666;
+    line-height: 1.6;
+}
+.home-section .container .social-media-link{
+    list-style: none;
+}
+.social-media-link li{
+    display: flex;
+    padding : 0px 20px;
+    border : 1px solid var(--border-color);
+    border-radius: 20px;
+    text-decoration: none;
+    justify-content: center;
+    align-items: center;
+}
+.social-media-link li i{
+    font-size: 2rem;
+    display: grid;
+    place-items: center;
+}

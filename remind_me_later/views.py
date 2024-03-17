@@ -6,12 +6,13 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout,get_user
 from django.contrib.auth.decorators import login_required
-from django.utils import timezone
 from reminder.models import Reminder
+import time
+from django.utils import timezone
 
-from reminder.utils import schedule_email
+from reminder.task import schedule_email
 
-# @login_required(login_url='/login')
+@login_required(login_url='/login')
 def homePage(request):
     print(request.user.is_authenticated);
     print(request.user)
@@ -21,23 +22,27 @@ def homePage(request):
 
 def loginPage(request):
     if request.method == "POST":
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        if username == '' or password == '':
-            messages.info(request, "Enter valid details")
-            return redirect('/login')
-        
-        authenticated_user = authenticate(request, username=username, password=password)
-        if authenticated_user is not None:
-            print("User authenticated:", authenticated_user)  # Debug statement
-            login(request,user=authenticated_user)
-            return redirect('/')  # Redirect to home page (adjust the URL name as per your project)
-        else:
-            messages.error(request, "Invalid username or password")
-            return redirect('/login')
+        try:
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+            if username == '' or password == '':
+                messages.info(request, "Enter valid details")
+                return redirect('/login')
+            
+            authenticated_user = authenticate(request, username=username, password=password)
+            if authenticated_user is not None:
+                print("User authenticated:", authenticated_user)  # Debug statement
+                login(request,user=authenticated_user)
+                return redirect('/')  # Redirect to home page (adjust the URL name as per your project)
+            else:
+                messages.error(request, "Invalid username or password")
+                return redirect('/login')
+        except Exception as error:
+            print("An error occurred while sending email:", str(error))
     
     return render(request, 'login.html')
 
+@login_required(login_url='/login')
 def logoutPage(request):
     logout(request)
     HttpResponse("logging out user.")
@@ -87,6 +92,7 @@ def signUpPage(request):
     
     return render(request, "signup.html",{'context':context})
 
+@login_required(login_url='/login')
 def reminderlist(request):
     reminder_list = None # Initialize as an empty list
     user_id = request.user
@@ -101,6 +107,7 @@ def reminderlist(request):
     return render(request, "reminderlist.html", {'reminder_list': reminder_list})
 
 
+@login_required(login_url='/login')
 def createReminder(request):
     if request.method == "POST":
         user_message = request.POST.get("message")
@@ -116,6 +123,11 @@ def createReminder(request):
                 user_time_date = datetime.strptime(scheduletime, "%Y-%m-%dT%H:%M")
                 ist_timezone = pytz.timezone('Asia/Kolkata')
                 user_time_date_utc = ist_timezone.localize(user_time_date).astimezone(pytz.utc)
+
+                # Check if the selected time is in the past
+                if user_time_date_utc < timezone.now():
+                    messages.error(request, "You cannot set a reminder for the past")
+                    return redirect('/create-reminder')
 
             except ValueError:
                 messages.error(request, "Invalid date or time format")
@@ -133,7 +145,7 @@ def createReminder(request):
             messages.success(request, "Reminder created successfully")
 
             schedule_email(created_reminder)
-            messages.success(request, "Email schedule successfully")
+            messages.success(request, "Email scheduled successfully")
 
             return redirect('/reminder-list')
         else:
@@ -152,8 +164,9 @@ def editReminder(request,id):
     # Your edit logic goes here
 
     return render(request, 'edit_reminder.html',{'reminder':reminder})
-
+@login_required(login_url='/login')
 def deleteReminder(request,id):
+    # it's is not stopping executed email
     #Fetch the reminder object based on the provided id
     try:
         reminder= Reminder.objects.get(id=id)
@@ -168,5 +181,5 @@ def deleteReminder(request,id):
 
 # testing email 
 def sendEmail(request):
-    send_email_to_client()
+    # send_email_to_client()
     return redirect('/')
